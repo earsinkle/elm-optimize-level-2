@@ -471,3 +471,24 @@ We can replace this implementation with a faster one that traverses the list and
 
 * Not included in elm-optimize-level-2 tool
 * The implementation used is similar to the improved String.join implementation [here](https://gitlab.com/e-neighborhood-watch/elm-string-benchmarks/#stringjoin) which sees some serious improvements over Elm's normal String.join.
+
+# Simplify identity
+
+This transforms:
+* all functions equivalent to `identity` into `identity`
+* `identity a` to `a`
+* `List.map identity` to `identiy` (hence by also applying the previous, this transform `List.map identity a` to `a`.
+
+## Why does it matter?
+We don't really write a lot of code with identity directly written in the code base. However, if we create a wrapper and a function like that:
+```
+type Wrapper = Wrapper Int
+
+toInt : Wrapper -> Int
+toInt (Wrapper i) = i
+```
+the compiler will remove the wrapper around the Int and transform `toInt` in a function equivalent to `identity` (and the `Wrapper` constructor as well). So when we do something like `List.map toInt veryLongList`, we loop over the very long list to only recopy it.
+
+We could applying the same kind of transformation on all the functors (Maybe, Result, Cmd, Sub, Html, ...) but I doubt it would be as beneficial as for the lists (and maybe arrays).
+
+This would be usefull if the codebase heavily use this wrapping technique. I see no downside doing it otherwise (asset size would even decrease a little)
