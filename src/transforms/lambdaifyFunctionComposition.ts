@@ -1,4 +1,4 @@
-import ts from 'typescript';
+import ts, { factory } from 'typescript';
 import { invocationRegex, wrapperRegex } from './utils/wrappers';
 
 /* Transform function compositions to anonymous functions.
@@ -379,11 +379,14 @@ function mergeFunctionCalls(functionToApplyFirst: ts.FunctionExpression, functio
   const returnStatement = ts.createReturn(
     ts.visitNode(extract2.returnValue, replaceParamVisitor, context)
   );
-  const body = ts.createBlock(
+  const body = factory.createBlock(
     extract1.statements.concat(extract2.statements).concat(returnStatement)
   )
-  const functionExpression = ts.getMutableClone(functionToApplyFirst);
-  functionExpression.body = body;
+
+  // factory.updateFunctionExpression(functionToApplyFirst, undefined, undefined, undefined, undefined, [], undefined, body)
+  const functionExpression = factory.updateFunctionExpression(functionToApplyFirst, undefined, undefined, undefined, undefined, [], undefined, body)
+  // const functionExpression = ts.getMutableClone(functionToApplyFirst);
+  // functionExpression.body = body;
   return functionExpression;
 }
 
