@@ -97,6 +97,7 @@ export const emptyOpts: Transforms = {
 
 
 export function toolDefaults(o3Enabled: boolean, replacements: { string: string } | null): Transforms {
+    console.log(o3Enabled)
     return {
         replaceVDomNode: false,
         variantShapes: true,
@@ -105,14 +106,14 @@ export function toolDefaults(o3Enabled: boolean, replacements: { string: string 
         inlineFunctions: true,
         listLiterals: false,
         passUnwrappedFunctions: true,
-        arrowFns: false,
+        arrowFns: true,
         shorthandObjectLiterals: false,
         objectUpdate: false,
         unusedValues: false,
         replaceListFunctions: true,
         replaceStringFunctions: false,
         lambdaifyFunctionComposition: true,
-        recordUpdates: o3Enabled,
+        recordUpdates: true,//o3Enabled,
         v8Analysis: false,
         fastCurriedFns: true,
         replacements: replacements
@@ -129,7 +130,7 @@ export function benchmarkDefaults(o3Enabled: boolean, replacements: { string: st
         inlineFunctions: true,
         listLiterals: false,
         passUnwrappedFunctions: true,
-        arrowFns: false,
+        arrowFns: true,
         shorthandObjectLiterals: false,
         objectUpdate: false,
         unusedValues: false,
