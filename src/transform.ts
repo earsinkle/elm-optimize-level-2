@@ -26,7 +26,6 @@ import { inlineNumberToString } from './transforms/inlineNumberToString';
 import { reportFunctionStatusInBenchmarks, v8Debug } from './transforms/analyze';
 import { recordUpdate } from './transforms/recordUpdate';
 import * as Replace from './transforms/replace';
-import { createTailCallRecursionTransformer } from './transforms/tailCallRecursion';
 
 export type Options = {
   compile: boolean;
@@ -100,7 +99,6 @@ export const transform = async (
   let inlineCtx: InlineContext | undefined;
   const transformations: any[] = removeDisabled([
     [transforms.replacements != null || replacements.length > 0, await Replace.fromFiles(transforms.replacements || {}, replacements)],
-    [transforms.tailCallRecursion, createTailCallRecursionTransformer(false) ],
     [transforms.v8Analysis, v8Debug],
     [transforms.variantShapes, normalizeVariantShapes],
     [transforms.lambdaifyFunctionComposition, lambdaifyFunctionComposition],
