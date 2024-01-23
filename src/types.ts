@@ -27,6 +27,7 @@ export type Transforms = {
   variantShapes: boolean;
   inlineNumberToString: boolean;
   inlineEquality: boolean;
+  arraysForHtml: boolean;
   inlineFunctions: boolean;
   passUnwrappedFunctions: boolean;
   listLiterals: InlineLists | false;
@@ -80,6 +81,7 @@ export const emptyOpts: Transforms = {
   inlineNumberToString: false,
   inlineFunctions: false,
   inlineEquality: false,
+  arraysForHtml: false,
   listLiterals: false,
   passUnwrappedFunctions: false,
   arrowFns: false,
@@ -103,6 +105,7 @@ export function toolDefaults(o3Enabled: boolean, replacements: { string: string 
         variantShapes: true,
         inlineNumberToString: false,
         inlineEquality: true,
+        arraysForHtml: true,
         inlineFunctions: true,
         listLiterals: false,
         passUnwrappedFunctions: true,
@@ -127,6 +130,7 @@ export function benchmarkDefaults(o3Enabled: boolean, replacements: { string: st
         variantShapes: true,
         inlineNumberToString: false,
         inlineEquality: true,
+        arraysForHtml: true,
         inlineFunctions: true,
         listLiterals: false,
         passUnwrappedFunctions: true,
@@ -156,6 +160,7 @@ export const previous: Previous =
         variantShapes: true,
         inlineNumberToString: false,
         inlineEquality: true,
+        arraysForHtml: true,
         inlineFunctions: true,
         listLiterals: false,
         passUnwrappedFunctions: true,
