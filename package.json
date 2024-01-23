@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mdgriffith/elm-optimize-level-2.git"
+    "url": "https://github.com/earsinkle/elm-optimize-level-2.git"
   },
   "engines": {
     "node": ">=16"

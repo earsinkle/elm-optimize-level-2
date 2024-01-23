@@ -492,3 +492,12 @@ the compiler will remove the wrapper around the Int and transform `toInt` in a f
 We could applying the same kind of transformation on all the functors (Maybe, Result, Cmd, Sub, Html, ...) but I doubt it would be as beneficial as for the lists (and maybe arrays).
 
 This would be usefull if the codebase heavily use this wrapping technique. I see no downside doing it otherwise (asset size would even decrease a little)
+
+# List Zipping
+
+For the existing implementions of list zipping functions, (ie `List.map2`, `List.map3`, `List.map4`, and `List.map5`) Elm builds a Javascript array containing the results and then converts it to an Elm `List`.
+We can replace this implementation with a faster one that builds the result `List` with no intermediate steps.
+
+## Results Summary
+
+* The improved implementations of `List.map2` and `List.map3` are benchmarked [here](https://gitlab.com/e-neighborhood-watch/elm/elm-zip-benchmarks#elm-zip-benchmarks), which sees performance improvements over Elm's normal `List.map2` and `List.map3`.
