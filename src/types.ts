@@ -45,15 +45,15 @@ export type Transforms = {
 };
 
 export enum InlineLists {
-  AsObjects = 'list_as_objs',
-  AsCons = 'list_as_cons',
+  AsObjects = 'list_as_objs', // Max stack exceeded when trying to run optimizer
+  AsCons = 'list_as_cons',    // Same as the other one
 }
 
 export enum ObjectUpdate {
   UseSpreadForUpdateAndOriginalRecord = 'for_both',
   UseSpreadOnlyToMakeACopy = 'for_copy',
-  UseAssign = 'use_assign',
-  InlineAssign = 'inline_assign',
+  UseAssign = 'use_assign',       // Does nothing
+  InlineAssign = 'inline_assign', // Breaks in Chrome
   InlineSpread = 'inline_spread',
 }
 
@@ -99,11 +99,13 @@ export const emptyOpts: Transforms = {
 
 
 export function toolDefaults(o3Enabled: boolean, replacements: { string: string } | null): Transforms {
-    console.log(o3Enabled)
+    if(!o3Enabled || o3Enabled){
+      console.log("This is a custom elm-optimize with newer pull requests pulled in, highly experimental!")
+    } 
     return {
-        replaceVDomNode: false,
+        replaceVDomNode: false, // Breaks
         variantShapes: true,
-        inlineNumberToString: false,
+        inlineNumberToString: true,
         inlineEquality: true,
         arraysForHtml: true,
         inlineFunctions: true,
@@ -114,7 +116,7 @@ export function toolDefaults(o3Enabled: boolean, replacements: { string: string 
         objectUpdate: false,
         unusedValues: false,
         replaceListFunctions: true,
-        replaceStringFunctions: false,
+        replaceStringFunctions: true,
         lambdaifyFunctionComposition: true,
         recordUpdates: true,//o3Enabled,
         v8Analysis: false,
